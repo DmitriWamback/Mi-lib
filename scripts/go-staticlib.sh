@@ -1,5 +1,9 @@
-LIBRARY=$1
+FILE_NAME=libMi
 
-cd $LIBRARY
-go build -a && go run main.go
-go build -a -buildmode=c-archive main.go
+cd libraries
+go build -a && go run $FILE_NAME.go
+go build -a -buildmode=c-archive $FILE_NAME.go
+cp $FILE_NAME.a libmain.a
+rm $FILE_NAME.a && rm $FILE_NAME.h && rm libraries
+
+mv libmain.a ../exported
