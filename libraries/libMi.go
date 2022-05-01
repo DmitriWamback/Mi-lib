@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"unsafe"
 	"./utilities"
+	"strings"
+	"io/ioutil"
 )
 
 /*
@@ -63,9 +65,45 @@ must explicitly be in the src/res/shaders/lib folder.
 
 An example would be:
 #version VERSION
-#pragma(include('file.glsl'))
+#INCLUDE "file.glsl"
 */
 
+func ReadShader(shaderImport *C.char) string {
+	str := C.GoString(shaderImport)
+
+	content, err := ioutil.ReadFile("test/"+str)
+	if err == nil {
+		return string(content)
+	}
+
+	fmt.Println(err)
+	return ""
+}
+
+func ReplaceLine(reference string, toreplace string, replacement string) string {
+
+	return strings.Replace(reference, toreplace, replacement, 1)
+}
+
+//export GLSLImport
+func GLSLImport(shaderSource *C.char) *C.char {
+
+	fullSource := C.GoString(shaderSource)
+	for i := 0; i < 10; i++ {
+		str := strings.Split(fullSource, "\n")
+
+		for i := 0; i < len(str); i++ {
+			if strings.HasPrefix(str[i], "#INCLUDE \"") {
+				file := strings.Split(strings.Split(str[i], "#INCLUDE \"")[1], "\"")[0]
+				source := ReadShader(C.CString(file))
+
+				fullSource = ReplaceLine(fullSource, str[i], source)
+			}
+		}
+	}
+
+	return C.CString(fullSource)
+}
 
 
 /*
