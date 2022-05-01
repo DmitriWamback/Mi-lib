@@ -11,9 +11,7 @@ import (
 
 /*
 ____________________________________________
-|										   |
-|			   MITI LIBRARY                |
-|__________________________________________|
+MITI LIBRARY
 
 MITI (Mi transfer interface)
 MITI is used to transfer data from one project to another to
@@ -52,9 +50,7 @@ func MitiParse(data *C.char, size *C.int) *C.float {
 
 /*
 ____________________________________________
-|										   |
-|			      GLSL SI                  |
-|__________________________________________|
+GLSL SI
 
 GLSL SI (GLSL Shader Importer)
 GSI is a custom-built importer for glsl shaders to
@@ -108,9 +104,7 @@ func GLSLImport(shaderSource *C.char) *C.char {
 
 /*
 ____________________________________________
-|										   |
-|			   .OBJ LOADER                 |
-|__________________________________________|
+.OBJ LOADER
 
 */
 
