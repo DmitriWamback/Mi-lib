@@ -22,7 +22,6 @@ Mi, it uses OpenGL and can be found in the src/mit/ directory
 in: https://github.com/DmitriWamback/Mi-engine
 */
 
-
 //export MitiFindDType
 func MitiFindDType(data *C.char) {
 	str := C.GoString(data)
