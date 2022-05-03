@@ -105,7 +105,13 @@ func GLSLImport(shaderSource *C.char) *C.char {
 /*
 ____________________________________________
 .OBJ LOADER
-
 */
+
+// TEST
+//export Pointer
+func Pointer(a *C.int) {
+	b := (C.int)(40)
+	a = &b
+}
 
 func main() {}
