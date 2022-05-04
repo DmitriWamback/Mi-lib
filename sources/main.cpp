@@ -14,7 +14,7 @@ int main() {
                                     "#INCLUDE \"../test/test1.glsl\"",
                                     "glsl/main/main.glsl");
 
-    std::cout << GLVSRC << '\n';
+    //std::cout << GLVSRC << '\n';
     int t;
     Pointer(&t);
     std::cout << t << '\n';
