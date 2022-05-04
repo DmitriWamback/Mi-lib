@@ -67,7 +67,7 @@ An example would be:
 func ReadShader(shaderImport *C.char) string {
 	str := C.GoString(shaderImport)
 
-	content, err := ioutil.ReadFile("test/"+str)
+	content, err := ioutil.ReadFile(str)
 	if err == nil {
 		return string(content)
 	}
@@ -82,8 +82,15 @@ func ReplaceLine(reference string, toreplace string, replacement string) string 
 }
 
 //export GLSLImport
-func GLSLImport(shaderSource *C.char) *C.char {
+func GLSLImport(shaderSource *C.char, shaderPath *C.char) *C.char {
 
+	path := strings.Split(C.GoString(shaderPath), "/")
+	cpath := ""
+
+	for i := 0; i < len(path)-1; i++ {
+		cpath += path[i]+"/"
+	}
+	
 	fullSource := C.GoString(shaderSource)
 	for i := 0; i < 10; i++ {
 		str := strings.Split(fullSource, "\n")
@@ -91,7 +98,7 @@ func GLSLImport(shaderSource *C.char) *C.char {
 		for i := 0; i < len(str); i++ {
 			if strings.HasPrefix(str[i], "#INCLUDE \"") {
 				file := strings.Split(strings.Split(str[i], "#INCLUDE \"")[1], "\"")[0]
-				source := ReadShader(C.CString(file))
+				source := ReadShader(C.CString(cpath+file))
 
 				fullSource = ReplaceLine(fullSource, str[i], source)
 			}
